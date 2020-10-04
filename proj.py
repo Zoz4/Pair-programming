@@ -10,9 +10,9 @@ class Pos():
         self.s = s
 def solve():
     move = [[-1,0],[1,0],[0,-1],[0,1]]
-    m = np.array([[1,2,3],[4,5,6],[7,8,0]])
+    m = np.array([[1,0,2],[3,4,5],[6,7,8]])
     dict = {}
-    p = Pos(2,2,m)
+    p = Pos(0,1,m)
     q = queue.Queue()
     q.put(p)
     while( not q.empty() ):
@@ -26,25 +26,25 @@ def solve():
             tp.s += step(i)
             tp.m[tp.x,tp.y],tp.m[h.x,h.y] = tp.m[h.x,h.y],tp.m[tp.x,tp.y]
             key = getnum(tp.m)
-            if(key not in dict):
+            if key not in dict.keys():
                 dict[key] = tp.s
                 q.put(tp)
             else:
                 if(len(dict[key]) > len(tp.s)):
                     dict[key] = tp.s
                 continue
-    with open('test.json','w') as f:
+    with open('./record/102345678.json','w') as f:
         json.dump(dict, f)
 
 def step(i):
     if(i == 0):
-        return 'w'
-    elif(i == 1):
         return 's'
+    elif(i == 1):
+        return 'w'
     elif(i == 2):
-        return 'a'
-    elif(i == 3):
         return 'd'
+    elif(i == 3):
+        return 'a'
 def getnum(m):
     num = ''
     for i in range(3):
@@ -52,5 +52,5 @@ def getnum(m):
             num += str(m[i,j])
     return num
 
-
-solve()
+if __name__ == '__main__':
+    solve()
