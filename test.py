@@ -1,11 +1,11 @@
-import json
+import numpy as np
+import cv2
+from matplotlib import pyplot as plt
 
-def readJsonFile(file_path):
-    with open(file_path,'r') as json_file:
-        dict = json.load(json_file)
-    return dict
-
-dict = readJsonFile('.//test.json')
-
-print(dict['426830571'])
-print(dict['412038576'])
+t = np.array([[1,2,3]],np.int32)
+s = np.empty((0,3),np.int32)
+t = np.append(t,s,axis=0)
+print(s.shape)
+print(t.shape)
+tr = np.full((len(s),1),1.0)
+print(tr.shape)

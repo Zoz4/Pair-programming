@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>45946745-bb4e-4d6e-80c5-fdc35dec9f9e</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>image.py</StartupFile>
+    <StartupFile>train.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,13 +21,22 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="image.py">
+    <Compile Include="ptools.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ctools.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="test.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="proj.py" />
+    <Compile Include="train.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="trainExample.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
