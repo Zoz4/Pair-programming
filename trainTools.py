@@ -1,20 +1,7 @@
 import cv2
 import numpy as np
 import os
-# 得到一张图片的特征值
-def getCorners(image):
-    gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-    corners = cv2.goodFeaturesToTrack(gray,25,0.01,10)
-    corners = np.float32(corners)
-    return corners
-# 得到一张图片的训练数据（特征值的列表）
-def getImageTrainData(image):
-    corners = getCorners(image)
-    TrainData = np.empty((0,2),np.float32)
-    if (corners.size > 1):
-        for j in corners:
-            TrainData = np.append(TrainData,j,axis=0)
-    return TrainData
+
 # 得到图片名称（A，a，B....）与相应标记的映射
 def getCharDict(filePath):
     dirNames = os.listdir(filePath)
@@ -26,6 +13,21 @@ def getCharDict(filePath):
             charDict[dirName[0]+str(j)] = i
             i = i+1.0
     return charDict
+
+# 得到一张图片的特征值
+def getCorners(image):
+    gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+    corners = cv2.goodFeaturesToTrack(gray,25,0.01,10)
+    corners = np.float32(corners)
+    return corners
+# 得到一张图片的训练数据（ 特征值的 ndarray.shape = (n,2) )
+def getImageTrainData(image):
+    corners = getCorners(image)
+    TrainData = np.empty((0,2),np.float32)
+    if (corners.size > 1):
+        for j in corners:
+            TrainData = np.append(TrainData,j,axis=0)
+    return TrainData
 # 得到KNN的训练数据，将其保存到filePath中的
 def getKNNTrainData(filePath):
     charDict = getCharDict(filePath)
@@ -53,7 +55,7 @@ def getKNNTrainData(filePath):
 #            print(key)
 #            break
     np.savez('./record/knnTrainData.npz',trainData = trainData, responses = responses)
-
+# results.shape =  
 def getClosestResult(results):
     count = {}
     for result in results:
@@ -71,6 +73,10 @@ def getClosestResult(results):
 
 if __name__ == '__main__':
     print('train.py')
-    filePath = './source'
-    #print(getCharDict(filePath))
-    getKNNTrainData(filePath)
+    img = cv2.imread('./source/a_/2.jpg')
+    corners = getCorners(img)
+    print(corners.shape)
+    print(corners)
+    features = getImageTrainData(img)
+    print(features.size)
+    print(features.shape)

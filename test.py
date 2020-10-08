@@ -24,6 +24,7 @@ for fileName in fileNames:
         test = getImageTrainData(img)
         if(test.size > 1):
             ret,results,neighbours,dist = knn.findNearest(test,k=1)
+            print(results.shape)
             result = getClosestResult(results)
             #print('p:   ' + fileName[0]+str(i) +'  m:   '+noDict[str(result)])
             if((fileName[0]+str(i)) != noDict[str(result)]):

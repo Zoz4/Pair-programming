@@ -10,9 +10,9 @@ class Pos():
         self.s = s
 def solve():
     move = [[-1,0],[1,0],[0,-1],[0,1]]
-    m = np.array([[1,0,2],[3,4,5],[6,7,8]])
+    m = np.array([[0,2,3],[4,5,6],[7,8,9]])
     dict = {}
-    p = Pos(0,1,m)
+    p = Pos(0,0,m)
     q = queue.Queue()
     q.put(p)
     while( not q.empty() ):
@@ -33,7 +33,7 @@ def solve():
                 if(len(dict[key]) > len(tp.s)):
                     dict[key] = tp.s
                 continue
-    with open('./record/102345678.json','w') as f:
+    with open('./record/023456789.json','w') as f:
         json.dump(dict, f)
 
 def step(i):
