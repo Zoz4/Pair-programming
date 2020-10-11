@@ -41,21 +41,8 @@ def getKNNTrainData(filePath):
             tr = np.full((len(td),1),np.float32(charDict[dirName[0]+str(i)]))
             trainData = np.append(trainData,td,axis=0)
             responses = np.append(responses,tr,axis=0)
-    #print(trainData.shape)
-    #print(responses.shape)
-#    timg = cv2.imread('./2/1.jpg')
-#    test = getImageTrainData(timg)
-#    ret,results,neigbhours,dist = knn.findNearest(test,k=2)
-#    print('ret: ',ret,"\n")
-#    print ("results: ", results,"\n")
-#    print ("neighbours: ", neighbours,"\n")
-#    print ("distance: ", dist)
-#    for key in charDict.keys():
-#        if (charDict[key] == ret):
-#            print(key)
-#            break
     np.savez('./record/knnTrainData.npz',trainData = trainData, responses = responses)
-# results.shape =  
+
 def getClosestResult(results):
     count = {}
     for result in results:
@@ -72,11 +59,4 @@ def getClosestResult(results):
     return closestResult
 
 if __name__ == '__main__':
-    print('train.py')
-    img = cv2.imread('./source/a_/2.jpg')
-    corners = getCorners(img)
-    print(corners.shape)
-    print(corners)
-    features = getImageTrainData(img)
-    print(features.size)
-    print(features.shape)
+    print('trainTools.py')

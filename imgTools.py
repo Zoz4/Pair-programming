@@ -26,7 +26,6 @@ def cutSourceImage(filePath):
         cutImage(image,filePath+'/'+dirname)
         os.remove(filePath+'/'+imagename)
 
-
 def isWhiteImage(image):
     ls = np.bincount(image.ravel(),minlength=256)
     if(ls[255] > 210000):

@@ -29,19 +29,15 @@ class eightDigitalCode():
         if(op == 'w'):
             nx = self.x - 1
             self.swapCode(self.x,self.y, nx,self.y)
-            #self.x = nx
         elif(op == 's'):
             nx = self.x + 1
             self.swapCode(self.x,self.y, nx,self.y)
-            #self.x = nx
         elif(op == 'a'):
             ny = self.y - 1
             self.swapCode(self.x,self.y, self.x,ny)
-            #self.y = ny
         elif(op == 'd'):
             ny = self.y + 1
             self.swapCode(self.x,self.y, self.x,ny)
-            #self.y = ny
     # 以字符串的形式返回当前状态
     def status(self):
         status = ''
@@ -54,20 +50,20 @@ class eightDigitalCode():
             return True
         else:
             return False
+    # 得到当前状态下经历一定步数的所有情况
     def getAllSituations(self,step):
         curStep = 0
         next = [[-1,0],[0,-1],[1,0],[0,1]]
         op = ['w','a','s','d']
         m = np.copy(self.cur)
         situations = {}
-        situations[getnum(m)] = ''
         p = Pos(self.x,self.y,m)
+        situations[p.status()] = ''
         q = queue.Queue()
         q.put(p)
         while(not q.empty()):
             h = q.get()
             if(len(h.s) == step):
-                #print(len(h.s))
                 break
             for i in range(4):
                 tp = Pos(h.x,h.y,h.m,h.s)
@@ -77,110 +73,128 @@ class eightDigitalCode():
                     continue
                 tp.s += op[i]
                 tp.m[tp.x,tp.y],tp.m[h.x,h.y] = tp.m[h.x,h.y],tp.m[tp.x,tp.y]
-                key = getnum(tp.m)
-                if key not in situations.keys():
-                    situations[key] = tp.s
+                status = tp.status()
+                if status not in situations.keys():
+                    situations[status] = tp.s
                     q.put(tp)
                 else:
-                    if(len(situations[key]) > len(tp.s)):
-                        situations[key] = tp.s
-
-
+                    if(len(situations[status]) > len(tp.s)):
+                        situations[status] = tp.s
         return situations
     def solve(self, step, swap):
         operations = ''
         mySwap = [0,0]
+        # operationsDict[status] 记录当前情况到目标情况的移动步骤
+        # 由于是通过目标状态推导
+        # operationsDict[status] = 'was....'
         operationsDict = readJsonFile('./record'+'/'+self.goal+'.json')
-        status = self.status()
         hasSwap = 0
         situations = self.getAllSituations(step)
-        #print(situations)
-        #print(len(situations))
-        minSituation = ''
+        print(len(max(situations.values(),key = len)))
+        minStatus = ''
         minCount = -1
-        for situation in situations.keys():
-            if(situation == self.goal):
-                operations = situations[situation]
+        # situations['123045678'] = 'swadas...'
+        # 遍历发生强制交换前的所有情况，寻找最短步数的解
+        for status in situations.keys():
+            # 在强制交换前已经还原
+            if(status == self.goal):
+                print('没有发生强制交换')
+                operations = situations[status]
                 mySwap = [0,0]
-                return
-            cnt = step-len(situations[situation])
+                return operations,mySwap
+            # 统计与强制交换发生的步数差距
+            # 差距为偶数步数保留，奇数步数舍去
+            cnt = step-len(situations[status])
             if( (cnt % 2 ) != 0 ):
                 continue
-            t1 = list(situation)
+            # 模拟强制交换，afterSwap:强制交换后的情况
+            t1 = list(status)
             t1[swap[0]-1],t1[swap[1]-1] = t1[swap[1]-1],t1[swap[0]-1]
             afterSwap = ''.join(t1)
-            # 经过交换后有解的所有情况
+
+            # 经过强制交换后有解的所有情况
             if afterSwap in operationsDict.keys():
-                curCount = max(len(situations[situation]),step) + len(operationsDict[afterSwap])
+                curCount = step + len(operationsDict[afterSwap])
                 if(minCount == -1):
                     hasSwap = 0
-                    minSituation = situation
+                    minStatus = status
                     minCount = curCount
                 else:
                     if(minCount > curCount):
                         hasSwap = 0
-                        minSituation = situation
+                        minStatus = status
                         minCount = curCount
-            # 经过交换后无解的所有情况
+            # 经过强制交换后无解的所有情况
             else:
+                # 枚举自由交换的所有情况，afterMySwap:自由交换后的情况
                 for i in range(1,9):
                     for j in range(i+1,10):
+
                         t2 = list(afterSwap)
                         t2[i-1],t2[j-1] = t2[j-1],t2[i-1]
                         afterMySwap = ''.join(t2)
 
                         if afterMySwap in operationsDict.keys():
-                            curCount = max(len(situations[situation]),step) + len(operationsDict[afterMySwap])
+                            curCount = step + len(operationsDict[afterMySwap])
                             if(minCount == -1):    
                                hasSwap = 1
-                               minSituation = situation
+                               minStatus = status
                                minCount = curCount
                                mySwap = [i,j]
-
                             else:
                                 if(minCount > curCount):
                                     hasSwap = 1
-                                    minSituation = situation
+                                    minStatus = status
                                     minCount = curCount
                                     mySwap = [i,j]
-
-
-        if(len(situations[minSituation]) <= step):
-                whiteLocation = minSituation.index('0')+1
-                beforeSwapOperations = situations[minSituation]
-                cnt = int((step - len(situations[minSituation]))/2)
+        # 补足交换前没有走够的步数
+        if(len(situations[minStatus]) <= step):
+                whiteLocation = minStatus.index('0')+1
+                beforeSwapOperations = situations[minStatus]
+                leftStepsCount = int(  ( step - len(situations[minStatus]) ) / 2  )
                 if(whiteLocation <= 3):
-                    for i in range(0,cnt):
+                    for i in range(0,leftStepsCount):
                         beforeSwapOperations += 'sw'
                 else:
-                    for i in range(0,cnt):
+                    for i in range(0,leftStepsCount):
                         beforeSwapOperations += 'ws'
-        
-        t = list(minSituation)
-        t[swap[0]-1],t[swap[1]-1] = t[swap[1]-1],t[swap[0]-1]
-        afterSwap = ''.join(t)
+        t1 = list(minStatus)
+        t1[swap[0]-1],t1[swap[1]-1] = t1[swap[1]-1],t1[swap[0]-1]
+        afterSwap = ''.join(t1)
+
+        # 没有自己交换
         if(hasSwap == 0):
+            print('没有自己交换')
             operations = beforeSwapOperations + operationsDict[afterSwap][::-1]
             mySwap = [0,0]
+            print('beforeSwapOperations = ',beforeSwapOperations)
+            print('afterSwapOperations = ',operationsDict[afterSwap][::-1])
+        # 发生自己交换
         else:
+            print('发生自己交换')
             t2 = list(afterSwap)
             t2[mySwap[0]-1],t2[mySwap[1]-1] = t2[mySwap[1]-1],t2[mySwap[0]-1]
             afterMySwap = ''.join(t2)
             operations = beforeSwapOperations + operationsDict[afterMySwap][::-1]
+            # 用于触发强制交换
+            if(len(operations) == step):
+                operations += 'd'
+            print('beforeSwapOperations = ',beforeSwapOperations)
+            print('afterSwapOperations = ', operationsDict[afterMySwap][::-1])
         return operations,mySwap
             
-
-
-
-
-
-
 class Pos():
     def __init__(self, x, y, m, s=''):
         self.x = x
         self.y = y
         self.m = np.copy(m)
         self.s = s
+    def status(self):
+        status = ''
+        for i in self.m.flatten():
+            status += str(i)
+        return status
+
 
 def getGoal(cutImageNo):
     if(cutImageNo == 1):
@@ -201,8 +215,3 @@ def getGoal(cutImageNo):
         return '123456709'
     elif(cutImageNo == 9):
         return '123456780'
-def getnum(m):
-    num = ''
-    for i in m.flatten():
-        num += str(i)
-    return num

@@ -29,10 +29,7 @@
     </Compile>
     <Compile Include="imgTools.py" />
     <Compile Include="main.py" />
-    <Compile Include="module1.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="test.py">
+    <Compile Include="testModule.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="proj.py" />
