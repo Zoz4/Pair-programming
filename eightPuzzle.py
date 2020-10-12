@@ -90,7 +90,6 @@ class eightDigitalCode():
         operationsDict = readJsonFile('./record'+'/'+self.goal+'.json')
         hasSwap = 0
         situations = self.getAllSituations(step)
-        print(len(max(situations.values(),key = len)))
         minStatus = ''
         minCount = -1
         # situations['123045678'] = 'swadas...'
@@ -167,6 +166,10 @@ class eightDigitalCode():
             print('没有自己交换')
             operations = beforeSwapOperations + operationsDict[afterSwap][::-1]
             mySwap = [0,0]
+            # 用于触发强制交换
+            if(len(operations) == step):
+                print('触发强制交换补足')
+                operations += 's'
             print('beforeSwapOperations = ',beforeSwapOperations)
             print('afterSwapOperations = ',operationsDict[afterSwap][::-1])
         # 发生自己交换
@@ -176,8 +179,9 @@ class eightDigitalCode():
             t2[mySwap[0]-1],t2[mySwap[1]-1] = t2[mySwap[1]-1],t2[mySwap[0]-1]
             afterMySwap = ''.join(t2)
             operations = beforeSwapOperations + operationsDict[afterMySwap][::-1]
-            # 用于触发强制交换
+            # 用于触发自由交换
             if(len(operations) == step):
+                print('触发自由交换补足')
                 operations += 'd'
             print('beforeSwapOperations = ',beforeSwapOperations)
             print('afterSwapOperations = ', operationsDict[afterMySwap][::-1])

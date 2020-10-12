@@ -33,9 +33,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="proj.py" />
-    <Compile Include="trainExample.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="trainTools.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

@@ -1,6 +1,5 @@
 import os
 import requests
-from PIL import Image
 import cv2
 import base64
 import json
@@ -34,3 +33,9 @@ def isWhiteImage(image):
         return False
 if __name__ == '__main__':
     print('ctools.py')
+    img1 = cv2.imread('./source/F_/6.jpg')
+    img2 = cv2.imread('./source/F_/9.jpg')
+    if(img1.any()==img2.any()):
+        print('yes')
+    print(np.bincount(img1.ravel(),minlength=256))
+    print(np.bincount(img2.ravel(),minlength=256))
