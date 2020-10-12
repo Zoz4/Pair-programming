@@ -16,31 +16,20 @@ if __name__ == '__main__':
         }
     }
 
-    # 测试使用
-    with open('./test/time.txt','r') as fp: 
-        tstr = fp.read()    
-    t = int(tstr)   
-    problem = requests.get(probUrl,params=probParams)   
-    problemJson = problem.json()    
-    writeBase64Image('./test/'+str(t)+'.jpg',problemJson['img'])    
-    saveDictFile(problemJson,'./test/'+str(t)+'.json')  
-    problemImage = cv2.imread('./test/'+str(t)+'.jpg')  
-    cutImage(problemImage,'./target')   
-    #
 
     # 从接口得到问题图片
-#    problem = requests.get(probUrl,params=probParams)
-#    problemJson = problem.json()
-#    writeBase64Image('./problem.jpg',problemJson['img'])
-#    saveDictFile(problemJson,'./problem.json')
+    problem = requests.get(probUrl,params=probParams)
+    problemJson = problem.json()
+    writeBase64Image('./problem.jpg',problemJson['img'])
+    saveDictFile(problemJson,'./problem.json')
 
     # 从Json文件中得到问题图片
 #    problemJson = readJsonFile('./problem'+'.json')
 #    writeBase64Image('./problem'+'.jpg',problemJson['img'])
 
     # 裁剪问题图片并保存到./target
-#    problemImage = cv2.imread('./problem.jpg')
-#    cutImage(problemImage,'./target')
+    problemImage = cv2.imread('./problem.jpg')
+    cutImage(problemImage,'./target')
 
     # 载入分割的原字符图片到responses（trainLabels）的映射
     charDict = readJsonFile('./record/charDict.json')
@@ -197,11 +186,6 @@ if __name__ == '__main__':
                 content = ansPost.json()    #
 
     # 测试使用
-    with open('./test/'+str(t)+'ans.json','w')as fp:
-        fp.write(json.dumps(content))
-    t += 1
-    with open('./test/time.txt','w') as fp:
-        fp.write(str(t))
 
     print(content)
     print('\nnotMatchCnt = ',notMatchCnt)
@@ -223,4 +207,11 @@ if __name__ == '__main__':
 
     print(json.dumps(ansParams))
 
-
+    with open('./test/time.txt','r') as fp:
+        tstr = fp.read()
+    t = int(tstr)
+    writeBase64Image('./test/'+str(t)+'.jpg',problemJson['img'])
+    saveDictFile(problemJson,'./test/'+str(t)+'.json')
+    saveDictFile(content,'./test/'+str(t)+'ans.json')
+    with open('./test/time.txt','w') as fp:
+        fp.write(str(t+1))
