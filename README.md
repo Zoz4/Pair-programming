@@ -1,5 +1,3 @@
-# Pair-programming
-
 结对编程作业：图片华容道</br></br>
 ![language](https://img.shields.io/badge/language-python-blue)
 ![license](https://img.shields.io/badge/license-BSD-green)
