@@ -15,41 +15,11 @@ class eightDigitalCode():
         self.y = y
         self.cur = np.copy(cur)
         self.goal = goal
-    # 交换两个数字的位置
-    def swapCode(self,x1,y1,x2,y2):
-        self.cur[x1,y1],self.cur[x2,y2] = self.cur[x2,y2],self.cur[x1,y1]
-        if(self.cur[x1,y1] == 0):
-            self.x = x1
-            self.y = y1
-        if(self.cur[x2,y2] == 0):
-            self.x = x2
-            self.y = y2
-    # 模拟白色方块的移动
-    def whiteBlockMove(self,op):
-        if(op == 'w'):
-            nx = self.x - 1
-            self.swapCode(self.x,self.y, nx,self.y)
-        elif(op == 's'):
-            nx = self.x + 1
-            self.swapCode(self.x,self.y, nx,self.y)
-        elif(op == 'a'):
-            ny = self.y - 1
-            self.swapCode(self.x,self.y, self.x,ny)
-        elif(op == 'd'):
-            ny = self.y + 1
-            self.swapCode(self.x,self.y, self.x,ny)
     # 以字符串的形式返回当前状态
     def status(self):
-        status = ''
-        for i in self.cur.flatten():
-            status += str(i)
+        curList = (self.cur.ravel()).tolist()
+        status = ''.join(str(i) for i in curList)
         return status
-    # 判断是否达到目标状态
-    def isDone(self):
-        if self.status() == self.goal:
-            return True
-        else:
-            return False
     # 得到当前状态下经历一定步数的所有情况
     def getAllSituations(self,step):
         curStep = 0
@@ -85,22 +55,24 @@ class eightDigitalCode():
         operations = ''
         mySwap = [0,0]
         # operationsDict[status] 记录当前情况到目标情况的移动步骤
-        # 由于是通过目标状态推导
         # operationsDict[status] = 'was....'
         operationsDict = readJsonFile('./record'+'/'+self.goal+'.json')
         hasSwap = 0
+        curStatus = self.status()
+
+        # 在强制交换前已经还原
+        if((curStatus in operationsDict.keys()) and (len(operationsDict[curStatus])<=step)):
+            operations = operationsDict[curStatus][::-1]
+            mySwap = [0, 0]
+            return operations, mySwap
+
+        # 在强制交换前未还原
         situations = self.getAllSituations(step)
         minStatus = ''
         minCount = -1
         # situations['123045678'] = 'swadas...'
         # 遍历发生强制交换前的所有情况，寻找最短步数的解
         for status in situations.keys():
-            # 在强制交换前已经还原
-            if(status == self.goal):
-                print('没有发生强制交换')
-                operations = situations[status]
-                mySwap = [0,0]
-                return operations,mySwap
             # 统计与强制交换发生的步数差距
             # 差距为偶数步数保留，奇数步数舍去
             cnt = step-len(situations[status])
@@ -148,43 +120,44 @@ class eightDigitalCode():
                                     mySwap = [i,j]
         # 补足交换前没有走够的步数
         if(len(situations[minStatus]) <= step):
-                whiteLocation = minStatus.index('0')+1
+                whiteLocation = minStatus.index('0')
                 beforeSwapOperations = situations[minStatus]
                 leftStepsCount = int(  ( step - len(situations[minStatus]) ) / 2  )
-                if(whiteLocation <= 3):
+                if(whiteLocation <= 2):
                     for i in range(0,leftStepsCount):
                         beforeSwapOperations += 'sw'
                 else:
                     for i in range(0,leftStepsCount):
                         beforeSwapOperations += 'ws'
+
         t1 = list(minStatus)
         t1[swap[0]-1],t1[swap[1]-1] = t1[swap[1]-1],t1[swap[0]-1]
         afterSwap = ''.join(t1)
 
         # 没有自己交换
         if(hasSwap == 0):
-            print('没有自己交换')
+#            print('没有自己交换')
             operations = beforeSwapOperations + operationsDict[afterSwap][::-1]
             mySwap = [0,0]
             # 用于触发强制交换
             if(len(operations) == step):
-                print('触发强制交换补足')
+#                print('触发强制交换补足')
                 operations += 's'
-            print('beforeSwapOperations = ',beforeSwapOperations)
-            print('afterSwapOperations = ',operationsDict[afterSwap][::-1])
+#            print('beforeSwapOperations = ',beforeSwapOperations)
+#            print('afterSwapOperations = ',operationsDict[afterSwap][::-1])
         # 发生自己交换
         else:
-            print('发生自己交换')
+#            print('发生自己交换')
             t2 = list(afterSwap)
             t2[mySwap[0]-1],t2[mySwap[1]-1] = t2[mySwap[1]-1],t2[mySwap[0]-1]
             afterMySwap = ''.join(t2)
             operations = beforeSwapOperations + operationsDict[afterMySwap][::-1]
             # 用于触发自由交换
             if(len(operations) == step):
-                print('触发自由交换补足')
+#                print('触发自由交换补足')
                 operations += 'd'
-            print('beforeSwapOperations = ',beforeSwapOperations)
-            print('afterSwapOperations = ', operationsDict[afterMySwap][::-1])
+#            print('beforeSwapOperations = ',beforeSwapOperations)
+#            print('afterSwapOperations = ', operationsDict[afterMySwap][::-1])
         return operations,mySwap
             
 class Pos():
@@ -194,9 +167,8 @@ class Pos():
         self.m = np.copy(m)
         self.s = s
     def status(self):
-        status = ''
-        for i in self.m.flatten():
-            status += str(i)
+        curList = (self.m.ravel()).tolist()
+        status = ''.join(str(i) for i in curList)
         return status
 
 

@@ -59,3 +59,5 @@ if __name__ == '__main__':
 #    for key,value in charDict.items():
 #        noDict[value] = key
 #    saveDictFile(noDict,'./record/noDict.json')
+
+    

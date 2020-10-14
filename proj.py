@@ -53,4 +53,4 @@ def getnum(m):
     return num
 
 if __name__ == '__main__':
-    solve()
+    print('proj.py')

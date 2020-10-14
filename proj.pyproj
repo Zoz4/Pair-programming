@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>45946745-bb4e-4d6e-80c5-fdc35dec9f9e</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>main.py</StartupFile>
+    <StartupFile>interface.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,10 +21,19 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="aiBattle.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="aiBattleSolveAll.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="eightPuzzle.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="fileTools.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="interface.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="imgTools.py" />
