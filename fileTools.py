@@ -48,6 +48,14 @@ def findSourceBlackPictureNo(filePath):
 if __name__ == '__main__':
     print('fileTools.py')
 
+    fileList = ['023456789.json','103456789.json','120456789.json','123056789.json','123406789.json','123450789.json','123456089.json','123456709.json','123456780.json']
+
+    for file in fileList:
+        dict = readJsonFile('./record/'+file)
+        for key,value in dict.items():
+            dict[key] = value[::-1]
+        saveDictFile(dict,'./record/'+file)
+
 #    with np.load('./record/knnTrainData.npz') as data:
 #        print(data.files)
 #        trainData = data['trainData']

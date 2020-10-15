@@ -11,7 +11,7 @@ if __name__ == '__main__':
 
     start = 'http://47.102.118.1:8089/api/challenge/start/'
 
-    challenge_uuid = "2ebf9882-3550-4080-a333-673dca944de4"
+    challenge_uuid = "adb7af28-384c-476b-af38-d2b19073e5b1"
 
     startUrl = start+challenge_uuid
     submitUrl = 'http://47.102.118.1:8089/api/challenge/submit'

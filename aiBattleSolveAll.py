@@ -95,10 +95,9 @@ def solveProblem(challenge_uuid):
     if(swap[0] != 0):
         submitData['answer']['swap'] = swap
     ansPost = requests.post(submitUrl ,data = json.dumps(submitData),headers = headers)
-    if(ansPost):    #
-        content = ansPost.json()    #
-
     # 测试使用
+    if(ansPost):    
+        content = ansPost.json()    
     print('\n')
     print(content)
     print('\nnotMatchCnt = ',notMatchCnt)

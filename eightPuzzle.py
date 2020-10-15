@@ -62,7 +62,7 @@ class eightDigitalCode():
 
         # 在强制交换前已经还原
         if((curStatus in operationsDict.keys()) and (len(operationsDict[curStatus])<=step)):
-            operations = operationsDict[curStatus][::-1]
+            operations = operationsDict[curStatus]
             mySwap = [0, 0]
             return operations, mySwap
 
@@ -136,28 +136,20 @@ class eightDigitalCode():
 
         # 没有自己交换
         if(hasSwap == 0):
-#            print('没有自己交换')
-            operations = beforeSwapOperations + operationsDict[afterSwap][::-1]
+            operations = beforeSwapOperations + operationsDict[afterSwap]
             mySwap = [0,0]
             # 用于触发强制交换
-            if(len(operations) == step):
-#                print('触发强制交换补足')
-                operations += 's'
-#            print('beforeSwapOperations = ',beforeSwapOperations)
-#            print('afterSwapOperations = ',operationsDict[afterSwap][::-1])
+#            if(len(operations) == step):
+#                operations += ''
         # 发生自己交换
         else:
-#            print('发生自己交换')
             t2 = list(afterSwap)
             t2[mySwap[0]-1],t2[mySwap[1]-1] = t2[mySwap[1]-1],t2[mySwap[0]-1]
             afterMySwap = ''.join(t2)
-            operations = beforeSwapOperations + operationsDict[afterMySwap][::-1]
+            operations = beforeSwapOperations + operationsDict[afterMySwap]
             # 用于触发自由交换
-            if(len(operations) == step):
-#                print('触发自由交换补足')
-                operations += 'd'
-#            print('beforeSwapOperations = ',beforeSwapOperations)
-#            print('afterSwapOperations = ', operationsDict[afterMySwap][::-1])
+#            if(len(operations) == step):
+#                operations += ''
         return operations,mySwap
             
 class Pos():
