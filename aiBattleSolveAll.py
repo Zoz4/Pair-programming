@@ -100,21 +100,21 @@ def solveProblem(challenge_uuid):
         content = ansPost.json()    
     print('\n')
     print(content)
-    print('\nnotMatchCnt = ',notMatchCnt)
-    print('goalChar = ',goalChar)
-    print('\n')
+#    print('\nnotMatchCnt = ',notMatchCnt)
+#    print('goalChar = ',goalChar)
+##    print('\n')
 
-    for key,value in match.items():
-        print(str(key) + '  =  ' + value)
-    print(e.status())
-    print('\n')
-    print('step = ',problemJson['data']['step'])
-    print('swap = ',problemJson['data']['swap'])
-    print('uuid = ',problemJson['uuid'])
-    print('\n')
+ #   for key,value in match.items():
+ #       print(str(key) + '  =  ' + value)
+ #   print(e.status())
+ #   print('\n')
+ #   print('step = ',problemJson['data']['step'])
+ #   print('swap = ',problemJson['data']['swap'])
+ #   print('uuid = ',problemJson['uuid'])
+ #   print('\n')
 
     print(json.dumps(submitData))
-
+#
     with open('./test/time.txt','r') as fp:
         tstr = fp.read()
     t = int(tstr)

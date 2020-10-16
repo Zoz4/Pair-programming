@@ -107,7 +107,7 @@ class eightDigitalCode():
 
                         if afterMySwap in operationsDict.keys():
                             curCount = step + len(operationsDict[afterMySwap])
-                            if(minCount == -1):    
+                            if(minCount == -1):
                                hasSwap = 1
                                minStatus = status
                                minCount = curCount
