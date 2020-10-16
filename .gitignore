@@ -3,6 +3,7 @@ __pycache__/
 proj.pyproj
 problem.json
 problem.jpg
-/test/*
+test/
 !/test/time.txt
 /target/*.jpg
+!target/
