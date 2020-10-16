@@ -4,4 +4,6 @@ proj.pyproj
 problem.json
 problem.jpg
 /test/*
+!/test/time.txt
 /target/*
+!/target
