@@ -6,4 +6,3 @@ problem.jpg
 test/
 !/test/time.txt
 /target/*.jpg
-!target/

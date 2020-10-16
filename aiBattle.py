@@ -11,7 +11,7 @@ if __name__ == '__main__':
 
     start = 'http://47.102.118.1:8089/api/challenge/start/'
 
-    challenge_uuid = "adb7af28-384c-476b-af38-d2b19073e5b1"
+    challenge_uuid = "4f198e1d-a7aa-4851-bfac-644597afb8fa"
 
     startUrl = start+challenge_uuid
     submitUrl = 'http://47.102.118.1:8089/api/challenge/submit'
@@ -121,35 +121,35 @@ if __name__ == '__main__':
     if(swap[0] != 0):
         submitData['answer']['swap'] = swap
     ansPost = requests.post(submitUrl ,data = json.dumps(submitData),headers = headers)
-    if(ansPost):    #
-        content = ansPost.json()    #
+#    if(ansPost):    #
+#        content = ansPost.json()    #
     # 测试使用
-    print('\n')
-    print(content)
-    print('\nnotMatchCnt = ',notMatchCnt)
-    print('goalChar = ',goalChar)
-    print('\n')
+ #   print('\n')
+  #  print(content)
+  #  print('\nnotMatchCnt = ',notMatchCnt)
+  #  print('goalChar = ',goalChar)
+  #  print('\n')
+#
+#    for key,value in match.items():
+#        print(str(key) + '  =  ' + value)
+#    if(goalChar[0] != 'F'):
+#        print(e.status())
+#    else:
+#        print(e0.status())
+#        print(e1.status())
+#    print('\n')
+#    print('step = ',problemJson['data']['step'])
+#    print('swap = ',problemJson['data']['swap'])
+#    print('uuid = ',problemJson['uuid'])
+#    print('\n')
 
-    for key,value in match.items():
-        print(str(key) + '  =  ' + value)
-    if(goalChar[0] != 'F'):
-        print(e.status())
-    else:
-        print(e0.status())
-        print(e1.status())
-    print('\n')
-    print('step = ',problemJson['data']['step'])
-    print('swap = ',problemJson['data']['swap'])
-    print('uuid = ',problemJson['uuid'])
-    print('\n')
+ #   print(json.dumps(submitData))
 
-    print(json.dumps(submitData))
-
-    with open('./test/time.txt','r') as fp:
-        tstr = fp.read()
-    t = int(tstr)
-    writeBase64Image('./test/'+str(t)+'.jpg',problemJson['data']['img'])
-    saveDictFile(problemJson,'./test/'+str(t)+'.json')
-    saveDictFile(content,'./test/'+str(t)+'ans.json')
-    with open('./test/time.txt','w') as fp:
-        fp.write(str(t+1))
+ #   with open('./test/time.txt','r') as fp:
+ #       tstr = fp.read()
+ #   t = int(tstr)
+ #   writeBase64Image('./test/'+str(t)+'.jpg',problemJson['data']['img'])
+ #   saveDictFile(problemJson,'./test/'+str(t)+'.json')
+ #   saveDictFile(content,'./test/'+str(t)+'ans.json')
+ #   with open('./test/time.txt','w') as fp:
+ #       fp.write(str(t+1))
