@@ -11,7 +11,11 @@ if __name__ == '__main__':
 
     start = 'http://47.102.118.1:8089/api/challenge/start/'
 
+<<<<<<< HEAD
     challenge_uuid = "f4f42e09-c7a0-4ab6-90ae-e27eb3baa720"
+=======
+    challenge_uuid = "4f198e1d-a7aa-4851-bfac-644597afb8fa"
+>>>>>>> 558d6a266d81e0a09774107f54fa85d7d7119427
 
     startUrl = start+challenge_uuid
     submitUrl = 'http://47.102.118.1:8089/api/challenge/submit'
@@ -121,12 +125,12 @@ if __name__ == '__main__':
     if(swap[0] != 0):
         submitData['answer']['swap'] = swap
     ansPost = requests.post(submitUrl ,data = json.dumps(submitData),headers = headers)
-    if(ansPost):    #
-        content = ansPost.json()    #
+#    if(ansPost):    #
+#        content = ansPost.json()    #
     # 测试使用
-    print('\n')
-    print(content)
-    print('\nnotMatchCnt = ',notMatchCnt)
+ #   print('\n')
+  #  print(content)
+  #  print('\nnotMatchCnt = ',notMatchCnt)
   #  print('goalChar = ',goalChar)
   #  print('\n')
 #
