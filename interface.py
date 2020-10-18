@@ -11,5 +11,6 @@ if __name__ == '__main__':
     print('interface.py')
 
     probInfo = getUnfinishedProblem(40)
+    print(len(probInfo))
     for info in probInfo:
         print(info['uuid'])

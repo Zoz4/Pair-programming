@@ -1,7 +1,9 @@
 # 结对编程作业：图片华容道
-![language](https://img.shields.io/badge/language-python-blue)
-![license](https://img.shields.io/badge/license-BSD-green)
-![code quailty](https://img.shields.io/badge/code%20quality-A-brightgreen)
+![language](https://img.shields.io/badge/language-python-blue)![license](https://img.shields.io/badge/license-BSD-green)![code quailty](https://img.shields.io/badge/code%20quality-A-brightgreen)
+
+## 简介
+
+本程序为解决图片华容道问题的AI部分。
 
 ## 运行环境
 

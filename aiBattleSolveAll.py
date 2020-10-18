@@ -100,6 +100,8 @@ def solveProblem(challenge_uuid):
         content = ansPost.json()    
     print('\n')
     print(content)
+    print('\n')
+    print(submitData)
 #    print('\nnotMatchCnt = ',notMatchCnt)
 #    print('goalChar = ',goalChar)
 ##    print('\n')
@@ -113,22 +115,31 @@ def solveProblem(challenge_uuid):
  #   print('uuid = ',problemJson['uuid'])
  #   print('\n')
 
-    print(json.dumps(submitData))
+#    print(json.dumps(submitData))
 #
-    with open('./test/time.txt','r') as fp:
-        tstr = fp.read()
-    t = int(tstr)
-    writeBase64Image('./test/'+str(t)+'.jpg',problemJson['data']['img'])
-    saveDictFile(problemJson,'./test/'+str(t)+'.json')
-    saveDictFile(content,'./test/'+str(t)+'ans.json')
-    with open('./test/time.txt','w') as fp:
-        fp.write(str(t+1))        
+#    with open('./test/time.txt','r') as fp:
+#        tstr = fp.read()
+#    t = int(tstr)
+#    writeBase64Image('./test/'+str(t)+'.jpg',problemJson['data']['img'])
+#    saveDictFile(problemJson,'./test/'+str(t)+'.json')
+#    saveDictFile(content,'./test/'+str(t)+'ans.json')
+#    with open('./test/time.txt','w') as fp:
+#        fp.write(str(t+1))        
 def solveAll():
     probInfo = getUnfinishedProblem(40)
     for info in probInfo:
-        print('author = ',info['author'])
+        print('\nauthor = ',info['author'])
         solveProblem(info['uuid'])
 
-
+def solveSomeProblem(cnt):
+    n = 0
+    probInfo = getUnfinishedProblem(40)
+    for info in probInfo:
+        if(n>=cnt):
+            break;
+        print('\nauthor = ',info['author'])
+        solveProblem(info['uuid'])
+        n += 1
 if __name__ == '__main__':
+    #solveSomeProblem(10)
     solveAll()
